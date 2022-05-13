@@ -2,17 +2,21 @@
 
 namespace App\Controller;
 
+use App\Form\ChangePassWordType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class AccountPasswordController extends AbstractController
 {
-    #[Route('/account/password', name: 'app_account_password')]
+    #[Route('/compte/changer-mot-de-passe', name: 'account_password')]
     public function index(): Response
     {
-        return $this->render('account_password/index.html.twig', [
-            'controller_name' => 'AccountPasswordController',
-        ]);
+        $user=$this->getUser();
+        $form=$this->createForm(ChangePassWordType::class,$user);
+        return $this->render('account/password.html.twig',
+            [
+                'form'=>$form->createView()
+            ]);
     }
 }

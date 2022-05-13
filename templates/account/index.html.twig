@@ -6,7 +6,9 @@
     <h1>Mon compte</h1>
 
     Bienvenue,{{ app.user.firstname}} dans votre compte. <br/>C'est dans cette espace que vous allez pouvoir gérér toutes vos informations.
-    <hr>-Modifier mot de passe<br/>
+    <hr>
+    <a href="{{path('account_password')}}">Modifier mon mot de passe </a>
+    <br/>
    -Ajouter une adresse<br/>
     -Gérer mes commandes<hr>
 {% endblock %}
