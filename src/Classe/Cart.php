@@ -9,37 +9,46 @@ use Symfony\Component\HttpFoundation\RequestStack;
 class Cart
 
 {
-    private $stack;
+    private $session;
 
     public function __construct(RequestStack $stack)
     {
 
-        $this->stack= $stack;
+        $this->session= $stack->getSession();
     }
 
     public function add($id)
     {
-        $session=$this->stack->getSession();
-        $cart=$session->get('cart', []);
+
+        $cart=$this->session->get('cart', []);
 
         if(!empty($cart[$id])){
             $cart[$id]++;
         } else {
             $cart[$id] = 1;
         }
-        $session->set('cart', $cart);
+
+        $this->session->set('cart', $cart);
 
     }
 
     public function get()
     {
-        $get = $this->stack->getSession();
-        return $get->get('cart');
+
+        return  $this->session->get('cart');
     }
 
     public function remove()
     {
-        $remove = $this->stack->getSession();
+        $remove = $this->session->getSession();
         return $remove->remove('cart');
+    }
+
+    public function delete($id)
+    {
+        $cart=$this->session->get('cart', []);
+        unset($cart[$id]);
+
+        return    $this->session->set('cart', $cart);
     }
 }

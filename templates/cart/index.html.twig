@@ -7,7 +7,7 @@
         Retrouver l'ensemble des produits que vous avez ajouté à votre panier.
         <hr>
 
-
+        {% if cart|length >0 %}
         <table class="table mt-3">
                 <thead>
                 <tr>
@@ -34,6 +34,9 @@
                         <td>{{product.quantity}}</td>
                         <td>{{(product.product.price/100)|number_format(2,",",".")}}€</td>
                         <td>{{((product.product.price*product.quantity)/100)|number_format(2,",",".")}}€</td>
+                        <td>  <a href="{{path('delete_to_cart',{'id':product.product.id})}}">
+                                        <img src="{{ asset('assets/img/trash.png')}}" height="18px" alt="Supprimer mon produit"></td>
+                              </a>
                 </tr>
                                 {% set total=total +product.product.price*product.quantity %}
                         {%endfor%}
@@ -43,6 +46,12 @@
         <div class="text-lg-right">
                <b>Nombre de produit : {{cart|length}}<br/>
                 <b>Total de mon panier :{{(total/100)|number_format(2,",",".")}}  €</b>
-                <a href="" class="btn btn-success btn-block"> Valider mon panier</a>
+                <a href="" class="btn btn-success btn-block mt-3"> Valider mon panier</a>
         </div>
+        {%else%}
+
+         <hr>
+        <p><b>Votre panier est vide</b></p>
+        {%endif%}
+
 {% endblock %}
