@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Address;
 use App\Form\AddressType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,6 +12,12 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AccountAddressController extends AbstractController
 {
+    private $entityManager;
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        $this->entityManager=$entityManager;
+    }
+
     #[Route('/compte/adresses', name: 'account_address')]
     public function index(): Response
     {
@@ -29,7 +36,10 @@ class AccountAddressController extends AbstractController
 
         if($form ->isSubmitted() && $form->isValid()) {
             $address->setUser($this->getUser());
-            dd($address);
+            $this->entityManager->persist($address);
+            $this->entityManager->flush();
+            $this->redirectToRoute('account_address');
+
         }
         return $this->render('account/address_add.html.twig',[
             'form'=>$form->createView()
