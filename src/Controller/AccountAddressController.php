@@ -28,6 +28,7 @@ class AccountAddressController extends AbstractController
         $form->handleRequest($request);
 
         if($form ->isSubmitted() && $form->isValid()) {
+            $address->setUser($this->getUser());
             dd($address);
         }
         return $this->render('account/address_add.html.twig',[
