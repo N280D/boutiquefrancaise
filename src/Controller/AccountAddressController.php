@@ -38,7 +38,7 @@ class AccountAddressController extends AbstractController
             $address->setUser($this->getUser());
             $this->entityManager->persist($address);
             $this->entityManager->flush();
-            $this->redirectToRoute('account_address');
+           return $this->redirectToRoute('account_address');
 
         }
         return $this->render('account/address_add.html.twig',[
