@@ -161,7 +161,9 @@ class Address
     {
         return $this->phone;
     }
-
+    public function __toString(){
+        return $this->getName().'[br] '.$this->getAddress().'[br] '.$this->getCity().'[br] '.$this->getCountry();
+    }
     public function setPhone(string $phone): self
     {
         $this->phone = $phone;
