@@ -59,7 +59,7 @@ class OrderController extends AbstractController
             $date=new \DateTime();
             $carries=$form->get('carries')->getData();
             $delivery=$form->get('adresses')->getData();
-            $delivery_content=$delivery->getFirstname().''.$delivery->getLastname();
+            $delivery_content=$delivery->getFirstname().' '.$delivery->getLastname();
             $delivery_content.='<br/>'.$delivery->getPhone();
             if ($delivery->getCompany())
             {
@@ -102,6 +102,8 @@ class OrderController extends AbstractController
         return $this->render('order/add.html.twig',[
 
             'cart'=>$cart->getFull(),
+            'carrier'=>$carries,
+            'delivery'=>$delivery_content
         ]);
     }
 }
